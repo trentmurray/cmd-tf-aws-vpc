@@ -41,7 +41,7 @@ publish:
 	git remote add github https://$(GIT_USERNAME):$(GIT_PASSWORD)@github.com/cmdlabs/$(CI_PROJECT_NAME)
 	git fetch --all
 	git checkout origin/master
-	git pull origin origin/master
+	git pull origin master
 	git push --follow-tags github master
 PHONY: publish
 
