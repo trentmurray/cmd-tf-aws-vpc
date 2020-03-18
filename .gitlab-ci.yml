@@ -48,3 +48,4 @@ publish:
     GIT_STRATEGY: clone
   only:
     - master
+    - tags
