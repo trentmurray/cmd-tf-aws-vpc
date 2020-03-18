@@ -97,7 +97,7 @@ resource "aws_network_acl_rule" "secure_block_public_ingress" {
   rule_number = 301
   egress      = false
   protocol    = -1
-  rule_action = "block"
+  rule_action = "deny"
   cidr_block  = local.public_tier_subnet
 }
 
@@ -109,22 +109,22 @@ resource "aws_network_acl_rule" "secure_block_public_egress" {
   rule_number = 301
   egress      = true
   protocol    = -1
-  rule_action = "block"
+  rule_action = "deny"
   cidr_block  = local.public_tier_subnet
 }
 
 resource "aws_network_acl_rule" "secure_custom" {
-  count = var.nacl_secure_custom != null ? length(var.nacl_secure_custom) : 0
+  for_each = var.nacl_secure_custom
 
   network_acl_id = aws_network_acl.secure.id
 
-  rule_number = var.nacl_secure_custom[count.index].rule_number
-  egress      = var.nacl_secure_custom[count.index].egress
-  protocol    = var.nacl_secure_custom[count.index].protocol
-  rule_action = var.nacl_secure_custom[count.index].rule_action
-  cidr_block  = var.nacl_secure_custom[count.index].cidr_block
-  from_port   = var.nacl_secure_custom[count.index].from_port
-  to_port     = var.nacl_secure_custom[count.index].to_port
+  rule_number = each.value.rule_number
+  egress      = each.value.egress
+  protocol    = each.value.protocol
+  rule_action = each.value.rule_action
+  cidr_block  = each.value.cidr_block
+  from_port   = each.value.from_port
+  to_port     = each.value.to_port
 }
 
 resource "aws_network_acl_rule" "secure_allow_http_egress" {

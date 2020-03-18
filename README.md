@@ -21,17 +21,21 @@ CIDR ranges are automatically calculated using Terraform's [`cidrsubnet()`](http
 In the event that you do not want this topology, you can configure the `x_tier_newbits` and `x_subnet_newbits` options found in the inputs.
 
 ## Custom NACLs
-NACLs in addition to the ones with input options can be added using the `nacl_x_custom` lists. The object schema is:
+NACLs in addition to the ones with input options can be added using the `nacl_x_custom` maps. The object schema is:
 
 ```tf
-list(object({
-    rule_number = number,
-    egress = bool,
-    protocol = number,
-    rule_action = string,
-    cidr_block = string,
-    from_port = string,
-    to_port = string}))
+object(
+    key = object({
+        rule_number = number,
+        egress = bool,
+        protocol = number,
+        rule_action = string,
+        cidr_block = string,
+        from_port = string,
+        to_port = string
+    })
+    key = ...
+)
 ```
 
 ## Inputs
