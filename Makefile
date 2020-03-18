@@ -40,8 +40,8 @@ PHONY: tag
 publish:
 	git remote add github https://$(GIT_USERNAME):$(GIT_PASSWORD)@github.com/cmdlabs/$(CI_PROJECT_NAME)
 	git fetch --all
-	git checkout master
-	git pull origin master
+	git checkout origin/master
+	git pull origin origin/master
 	git push --follow-tags github master
 PHONY: publish
 
