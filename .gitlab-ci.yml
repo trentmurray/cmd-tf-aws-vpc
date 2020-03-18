@@ -44,5 +44,7 @@ publish:
     - cmd
   script:
     - make publish
+  variables:
+    GIT_STRATEGY: clone
   only:
     - master
