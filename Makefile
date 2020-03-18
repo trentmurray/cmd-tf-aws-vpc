@@ -38,10 +38,10 @@ tag:
 PHONY: tag
 
 publish:
-	git config credential.helper "/usr/local/bin/git-credential-helper.sh"
-	git remote add github https://github.com/cmdlabs/$(CI_PROJECT_NAME)
+	git remote add github https://$(GIT_USERNAME):$(GIT_PASSWORD)@github.com/cmdlabs/$(CI_PROJECT_NAME)
+	git fetch
+	git checkout master
 	git push --follow-tags github master
-	git config --unset credential.helper
 PHONY: publish
 
 profile: .env
