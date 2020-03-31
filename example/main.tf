@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "https://github.com/cmdlabs/terraform-aws-vpc?ref=0.5.1"
+  source = "https://github.com/cmdlabs/cmd-tf-aws-vpc?ref=0.6.0"
 
   vpc_name       = "cmd-vpc-1"
   vpc_cidr_block = "10.150.0.0/16"
