@@ -1,3 +1,45 @@
+/**
+* # terraform-aws-vpc
+* ## Summary
+* This module deploys a 3-tier VPC. The following resources are managed:
+* - VPC
+* - Subnets
+* - Routes
+* - NACLs
+* - Internet Gateway
+* - NAT Gateways
+* - Virtual Private Gateway
+* - DHCP Option Sets
+* - VPC Endpoints
+*
+* Tags on VPCs/Subnets are currently set to ignore changes. This is to support EKS clusters.
+*
+* Terraform >= 0.12 is required for this module.
+*
+* ## CIDR Calculations
+* CIDR ranges are automatically calculated using Terraform's [`cidrsubnet()`](https://www.terraform.io/docs/configuration/functions/cidrsubnet.html) function. The default configuration results in equal-sized tiers that are -/2 smaller than the VPC. (A /16 VPC becomes a /18 tier.) Subnets are calculated with tierCIDR-/2. (A /18 tier becomes /20 subnets.) The number of subnets is determined by the number of `availability_zones` specified.
+*
+* In the event that you do not want this topology, you can configure the `x_tier_newbits` and `x_subnet_newbits` options found in the inputs.
+*
+* ## Custom NACLs
+* NACLs in addition to the ones with input options can be added using the `nacl_x_custom` maps. The object schema is:
+*
+* ```hcl
+* object(
+*     key = object({
+*         rule_number = number,
+*         egress = bool,
+*         protocol = number,
+*         rule_action = string,
+*         cidr_block = string,
+*         from_port = string,
+*         to_port = string
+*     })
+*     key = ...
+* )
+* ```
+*/
+
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr_block
 

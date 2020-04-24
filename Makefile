@@ -1,11 +1,11 @@
-RELEASE_VERSION = 0.6.0
+RELEASE_VERSION = 0.7.0
 
 ifdef CI
 	PROFILE_REQUIRED=profile
 endif
 
 docs: .env
-	docker-compose run --rm terraform-utils terraform-docs markdown document . > README.md
+	docker-compose run --rm terraform-utils terraform-docs markdown document . --header-from vpc.tf > README.md
 PHONY: docs
 
 format: .env
