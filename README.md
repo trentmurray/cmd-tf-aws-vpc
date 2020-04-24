@@ -1,5 +1,5 @@
 # terraform-aws-vpc
-## Summary
+## Summary  
 This module deploys a 3-tier VPC. The following resources are managed:
 - VPC
 - Subnets
@@ -15,15 +15,15 @@ Tags on VPCs/Subnets are currently set to ignore changes. This is to support EKS
 
 Terraform >= 0.12 is required for this module.
 
-## CIDR Calculations
+## CIDR Calculations  
 CIDR ranges are automatically calculated using Terraform's [`cidrsubnet()`](https://www.terraform.io/docs/configuration/functions/cidrsubnet.html) function. The default configuration results in equal-sized tiers that are -/2 smaller than the VPC. (A /16 VPC becomes a /18 tier.) Subnets are calculated with tierCIDR-/2. (A /18 tier becomes /20 subnets.) The number of subnets is determined by the number of `availability_zones` specified.
 
 In the event that you do not want this topology, you can configure the `x_tier_newbits` and `x_subnet_newbits` options found in the inputs.
 
-## Custom NACLs
+## Custom NACLs  
 NACLs in addition to the ones with input options can be added using the `nacl_x_custom` maps. The object schema is:
 
-```tf
+```hcl
 object(
     key = object({
         rule_number = number,
@@ -38,45 +38,303 @@ object(
 )
 ```
 
-## Inputs
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-------:|:--------:|
-| vpc_name | Name that will be prefixed to resources | string | n/a | yes |
-| vpc_cidr_block | The CIDR block of the VPC | string | n/a | yes |
-| vpc_enable_dns_support | Enable VPC DNS Resolver | bool | `true` | no |
-| vpc_enable_dns_hostnames | Enable VPC DNS hostname resolution | bool | `true` | no |
-| availability_zones | List of availability zones | list(string) | n/a | yes |
-| vpc_endpoints | List of VPC Interface endpoints | list(string) | [] | no |
-| vpc_gatewayendpoints | List of VPC Gateway endpoints | list(string) | [] | no |
-| public_tier_newbits | newbits value for calculating the public tier size | number | `2` | no |
-| public_subnet_newbits | newbits value for calculating the public subnet size | number | `2` | no |
-| private_tier_newbits | newbits value for calculating the private tier size | number | `2` | no |
-| private_subnet_newbits | newbits value for calculating the private subnet size | number | `2` | no |
-| secure_tier_newbits | newbits value for calculating the secure tier size | number | `2` | no |
-| secure_subnet_newbits | newbits value for calculating the secure subnet size | number | `2` | no |
-| enable_internet_gateway | Attach an internet gateway to the VPC | bool | `true` | no |
-| enable_nat_gateway | Create NAT gateways in the VPC | bool | `true` | no |
-| enable_per_az_nat_gateway | Create 1 NAT gateway per AZ | bool | `true` | no |
-| enable_virtual_private_gateway | Attach a virtual private gateway to the VPC | bool | `false` | no |
-| virtual_private_gateway_asn | ASN for the Amazon side of the VPG | number | `64512` | no |
-| enable_custom_dhcp_options | Enable custom DHCP options, you must specify custom_dhcp_options | bool | `false` | no |
-| custom_dhcp_options | Custom DHCP options | object({domain_name = string, domain_name_servers = list(string), ntp_servers = list(string), netbios_name_servers = list(string), netbios_node_type = number}) | {domain_name = null domain_name_servers = null ntp_servers = null netbios_name_servers = null netbios_node_type = null} | no |
-| nacl_allow_all_vpc_traffic | Add a rule to all NACLs allowing all traffic to/from the VPC CIDR | bool | `true` | no |
-| nacl_allow_all_ephemeral | Add a rule to all NACLs allowing all ephemeral ports | bool | `true` | no |
-| nacl_allow_all_http | Add a rule to all NACLs allowing HTTP egress | bool | `true` | no |
-| nacl_allow_all_https | Add a rule to all NACLs allowing HTTPS egress | bool | `true` | no |
-| nacl_block_public_to_secure | Block all traffic between public and secure tiers | bool | `false` | no |
-| nacl_public_custom | List of custom nacls to apply to the public tier | list(object({rule_number = number, egress = bool, protocol = any, rule_action = string, cidr_block = string, from_port = string, to_port = string})) | `null` | no |
-| nacl_private_custom | List of custom nacls to apply to the private tier | list(object({rule_number = number, egress = bool, protocol = any, rule_action = string, cidr_block = string, from_port = string, to_port = string})) | `null` | no |
-| nacl_secure_custom | List of custom nacls to apply to the secure tier | list(object({rule_number = number, egress = bool, protocol = any, rule_action = string, cidr_block = string, from_port = string, to_port = string})) | `null` | no |
-| tags | Tags applied to all resources | map(string) | `{}` | no |
+## Requirements
+
+The following requirements are needed by this module:
+
+- terraform (>= 0.12.6)
+
+- aws (>= 2.8.1)
+
+## Providers
+
+The following providers are used by this module:
+
+- aws (>= 2.8.1)
+
+## Required Inputs
+
+The following input variables are required:
+
+### availability\_zones
+
+Description: List of availability zones
+
+Type: `list(string)`
+
+### vpc\_cidr\_block
+
+Description: The CIDR block of the VPC
+
+Type: `string`
+
+### vpc\_name
+
+Description: Name that will be prefixed to resources
+
+Type: `string`
+
+## Optional Inputs
+
+The following input variables are optional (have default values):
+
+### custom\_dhcp\_options
+
+Description: Custom DHCP options
+
+Type:
+
+```hcl
+object({
+    domain_name          = string,
+    domain_name_servers  = list(string),
+    ntp_servers          = list(string),
+    netbios_name_servers = list(string),
+    netbios_node_type    = number
+  })
+```
+
+Default:
+
+```json
+{
+  "domain_name": null,
+  "domain_name_servers": null,
+  "netbios_name_servers": null,
+  "netbios_node_type": null,
+  "ntp_servers": null
+}
+```
+
+### enable\_custom\_dhcp\_options
+
+Description: Enable custom DHCP options, you must specify custom\_dhcp\_options
+
+Type: `bool`
+
+Default: `false`
+
+### enable\_internet\_gateway
+
+Description: Attach an internet gateway to the VPC
+
+Type: `bool`
+
+Default: `true`
+
+### enable\_nat\_gateway
+
+Description: Create nat gateways in the VPC,
+
+Type: `bool`
+
+Default: `true`
+
+### enable\_per\_az\_nat\_gateway
+
+Description: Create 1 nat gateway per AZ
+
+Type: `bool`
+
+Default: `true`
+
+### enable\_virtual\_private\_gateway
+
+Description: Attach a virtual private gateway to the VPC
+
+Type: `bool`
+
+Default: `false`
+
+### nacl\_allow\_all\_ephemeral
+
+Description: Add a rule to all NACLs allowing all ephemeral ports
+
+Type: `bool`
+
+Default: `true`
+
+### nacl\_allow\_all\_http
+
+Description: Add a rule to all NACLs allowing http egress
+
+Type: `bool`
+
+Default: `true`
+
+### nacl\_allow\_all\_https
+
+Description: Add a rule to all NACLs allowing https egress
+
+Type: `bool`
+
+Default: `true`
+
+### nacl\_allow\_all\_vpc\_traffic
+
+Description: Add a rule to all NACLs allowing all traffic to/from the vpc cidr
+
+Type: `bool`
+
+Default: `true`
+
+### nacl\_block\_public\_to\_secure
+
+Description: Block all traffic between public and secure tiers
+
+Type: `bool`
+
+Default: `false`
+
+### nacl\_private\_custom
+
+Description: List of custom nacls to apply to the private tier
+
+Type: `map`
+
+Default: `{}`
+
+### nacl\_public\_custom
+
+Description: List of custom nacls to apply to the public tier
+
+Type: `map`
+
+Default: `{}`
+
+### nacl\_secure\_custom
+
+Description: List of custom nacls to apply to the secure tier
+
+Type: `map`
+
+Default: `{}`
+
+### private\_subnet\_newbits
+
+Description: newbits value for calculating the private subnet size
+
+Type: `number`
+
+Default: `2`
+
+### private\_tier\_newbits
+
+Description: newbits value for calculating the private tier size
+
+Type: `number`
+
+Default: `2`
+
+### public\_subnet\_newbits
+
+Description: newbits value for calculating the public subnet size
+
+Type: `number`
+
+Default: `2`
+
+### public\_tier\_newbits
+
+Description: newbits value for calculating the public tier size
+
+Type: `number`
+
+Default: `2`
+
+### secure\_subnet\_newbits
+
+Description: newbits value for calculating the secure subnet size
+
+Type: `number`
+
+Default: `2`
+
+### secure\_tier\_newbits
+
+Description: newbits value for calculating the secure tier size
+
+Type: `number`
+
+Default: `2`
+
+### tags
+
+Description: Tags applied to all resources
+
+Type: `map(string)`
+
+Default: `{}`
+
+### virtual\_private\_gateway\_asn
+
+Description: ASN for the Amazon side of the VPG
+
+Type: `number`
+
+Default: `64512`
+
+### vpc\_enable\_dns\_hostnames
+
+Description: Enable VPC DNS hostname resolution
+
+Type: `bool`
+
+Default: `true`
+
+### vpc\_enable\_dns\_support
+
+Description: Enable VPC DNS resolver
+
+Type: `bool`
+
+Default: `true`
+
+### vpc\_endpoints
+
+Description: List of VPC Interface endpoints
+
+Type: `list(string)`
+
+Default: `[]`
+
+### vpc\_gatewayendpoints
+
+Description: List of VPC Gateway endpoints
+
+Type: `list(string)`
+
+Default: `[]`
 
 ## Outputs
-| Name | Description |
-|------|-------------|
-| public_tier_subnet | Calculated CIDR range of the public tier |
-| private_tier_subnet | Calculated CIDR range of the private tier |
-| secure_tier_subnet | Calculated CIDR range of the secure tier |
 
-## Development
-Most of the Terraform ecosystem does not yet support 0.12. You need to manually update Inputs/Outputs when you add variables until terraform-docs supports 0.12.
+The following outputs are exported:
+
+### private\_tier\_subnet\_cidr
+
+Description: Private tier CIDR range
+
+### private\_tier\_subnet\_ids
+
+Description: List of subnet ids for the private tier
+
+### public\_tier\_subnet\_cidr
+
+Description: Public tier CIDR range
+
+### public\_tier\_subnet\_ids
+
+Description: List of subnet ids for the public tier
+
+### secure\_tier\_subnet\_cidr
+
+Description: Secure tier CIDR range
+
+### secure\_tier\_subnet\_ids
+
+Description: List of subnet ids for the secure tier
+
+### vpc\_id
+
+Description: VPC ID
+
