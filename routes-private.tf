@@ -24,4 +24,9 @@ resource "aws_route" "private_default" {
   route_table_id         = aws_route_table.private[count.index].id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = var.enable_per_az_nat_gateway ? aws_nat_gateway.main[count.index].id : aws_nat_gateway.main[0].id
+
+  # Attempted fix: https://github.com/terraform-providers/terraform-provider-aws/issues/13138
+  timeouts {
+    create = "10m"
+  }
 }

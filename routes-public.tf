@@ -24,4 +24,9 @@ resource "aws_route" "public_default" {
   route_table_id         = aws_route_table.public[count.index].id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.main[0].id
+
+  # Attempted fix: https://github.com/terraform-providers/terraform-provider-aws/issues/13138
+  timeouts {
+    create = "10m"
+  }
 }
