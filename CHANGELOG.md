@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1] 2020-06-10
+### Added
+- Added route table ids outputs for each tier.
+
 ## [0.7.0] 2020-04-24
 ### Breaking
 - Added outputs to simplify multi module stacks. Existing outputs have been renamed to be more appropriate.
