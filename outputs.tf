@@ -32,3 +32,18 @@ output "secure_tier_subnet_ids" {
   description = "List of subnet ids for the secure tier"
   value       = aws_subnet.secure.*.id
 }
+
+output "public_tier_route_table_ids" {
+  description = "List of route table ids for the public tier"
+  value       = aws_route_table.public[*].id
+}
+
+output "private_tier_route_table_ids" {
+  description = "List of route table ids for the private tier"
+  value       = aws_route_table.private[*].id
+}
+
+output "secure_tier_route_table_ids" {
+  description = "List of route table ids for the secure tier"
+  value       = aws_route_table.secure[*].id
+}
