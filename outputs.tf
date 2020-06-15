@@ -10,7 +10,7 @@ output "private_tier_subnet_cidr" {
 
 output "secure_tier_subnet_cidr" {
   description = "Secure tier CIDR range"
-  value       = local.private_tier_subnet
+  value       = local.secure_tier_subnet
 }
 
 output "vpc_id" {
