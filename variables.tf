@@ -37,21 +37,21 @@ variable "availability_zones" {
   description = "List of availability zones"
 }
 
-variable "public_tier_newbits" {
-  type        = number
-  description = "newbits value for calculating the public tier size"
-  default     = 2
-}
-
 variable "public_subnet_newbits" {
   type        = number
   description = "newbits value for calculating the public subnet size"
   default     = 2
 }
 
-variable "private_tier_newbits" {
+variable "public_tier_netnum" {
   type        = number
-  description = "newbits value for calculating the private tier size"
+  description = "netnum value for calculating the public tier cidr"
+  default     = 0
+}
+
+variable "public_tier_newbits" {
+  type        = number
+  description = "newbits value for calculating the public tier size"
   default     = 2
 }
 
@@ -61,15 +61,33 @@ variable "private_subnet_newbits" {
   default     = 2
 }
 
-variable "secure_tier_newbits" {
+variable "private_tier_netnum" {
   type        = number
-  description = "newbits value for calculating the secure tier size"
+  description = "netnum value for calculating the private tier cidr"
+  default     = 1
+}
+
+variable "private_tier_newbits" {
+  type        = number
+  description = "newbits value for calculating the private tier size"
   default     = 2
 }
 
 variable "secure_subnet_newbits" {
   type        = number
   description = "newbits value for calculating the secure subnet size"
+  default     = 2
+}
+
+variable "secure_tier_netnum" {
+  type        = number
+  description = "netnum value for calculating the secure tier cidr"
+  default     = 2
+}
+
+variable "secure_tier_newbits" {
+  type        = number
+  description = "newbits value for calculating the secure tier size"
   default     = 2
 }
 
