@@ -3,7 +3,7 @@ resource "aws_subnet" "public" {
 
   vpc_id            = aws_vpc.main.id
   availability_zone = sort(var.availability_zones)[count.index]
-  cidr_block        = cidrsubnet(local.public_tier_subnet, 2, count.index)
+  cidr_block        = cidrsubnet(local.public_tier_subnet, var.public_subnet_newbits, count.index)
 
   tags = merge(
     { Name = "${var.vpc_name}-public-${local.count_to_alpha[count.index]}" },
@@ -20,7 +20,7 @@ resource "aws_subnet" "private" {
 
   vpc_id            = aws_vpc.main.id
   availability_zone = sort(var.availability_zones)[count.index]
-  cidr_block        = cidrsubnet(local.private_tier_subnet, 2, count.index)
+  cidr_block        = cidrsubnet(local.private_tier_subnet, var.private_subnet_newbits, count.index)
 
   tags = merge(
     { Name = "${var.vpc_name}-private-${local.count_to_alpha[count.index]}" },
@@ -37,7 +37,7 @@ resource "aws_subnet" "secure" {
 
   vpc_id            = aws_vpc.main.id
   availability_zone = sort(var.availability_zones)[count.index]
-  cidr_block        = cidrsubnet(local.secure_tier_subnet, 2, count.index)
+  cidr_block        = cidrsubnet(local.secure_tier_subnet, var.secure_subnet_newbits, count.index)
 
   tags = merge(
     { Name = "${var.vpc_name}-secure-${local.count_to_alpha[count.index]}" },

@@ -218,6 +218,14 @@ Type: `number`
 
 Default: `2`
 
+### private\_tier\_netnum
+
+Description: netnum value for calculating the private tier cidr
+
+Type: `number`
+
+Default: `1`
+
 ### private\_tier\_newbits
 
 Description: newbits value for calculating the private tier size
@@ -234,6 +242,14 @@ Type: `number`
 
 Default: `2`
 
+### public\_tier\_netnum
+
+Description: netnum value for calculating the public tier cidr
+
+Type: `number`
+
+Default: `0`
+
 ### public\_tier\_newbits
 
 Description: newbits value for calculating the public tier size
@@ -245,6 +261,14 @@ Default: `2`
 ### secure\_subnet\_newbits
 
 Description: newbits value for calculating the secure subnet size
+
+Type: `number`
+
+Default: `2`
+
+### secure\_tier\_netnum
+
+Description: netnum value for calculating the secure tier cidr
 
 Type: `number`
 
@@ -310,6 +334,10 @@ Default: `[]`
 
 The following outputs are exported:
 
+### private\_tier\_route\_table\_ids
+
+Description: List of route table ids for the private tier
+
 ### private\_tier\_subnet\_cidr
 
 Description: Private tier CIDR range
@@ -318,6 +346,10 @@ Description: Private tier CIDR range
 
 Description: List of subnet ids for the private tier
 
+### public\_tier\_route\_table\_ids
+
+Description: List of route table ids for the public tier
+
 ### public\_tier\_subnet\_cidr
 
 Description: Public tier CIDR range
@@ -325,6 +357,10 @@ Description: Public tier CIDR range
 ### public\_tier\_subnet\_ids
 
 Description: List of subnet ids for the public tier
+
+### secure\_tier\_route\_table\_ids
+
+Description: List of route table ids for the secure tier
 
 ### secure\_tier\_subnet\_cidr
 
