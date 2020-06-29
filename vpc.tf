@@ -11,6 +11,7 @@
 * - Virtual Private Gateway
 * - DHCP Option Sets
 * - VPC Endpoints
+* - RDS/EC/Redshift Subnet Groups
 *
 * Tags on VPCs/Subnets are currently set to ignore changes. This is to support EKS clusters.
 *
