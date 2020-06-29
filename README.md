@@ -10,6 +10,7 @@ This module deploys a 3-tier VPC. The following resources are managed:
 - Virtual Private Gateway
 - DHCP Option Sets
 - VPC Endpoints
+- RDS/EC/Redshift Subnet Groups
 
 Tags on VPCs/Subnets are currently set to ignore changes. This is to support EKS clusters.
 

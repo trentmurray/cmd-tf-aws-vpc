@@ -48,3 +48,22 @@ resource "aws_subnet" "secure" {
     ignore_changes = [tags]
   }
 }
+
+resource "aws_db_subnet_group" "secure" {
+  name       = "${var.vpc_name}-secure"
+  subnet_ids = aws_subnet.secure.*.id
+
+  tags = var.tags
+}
+
+resource "aws_redshift_subnet_group" "secure" {
+  name       = "${var.vpc_name}-secure"
+  subnet_ids = aws_subnet.secure.*.id
+
+  tags = var.tags
+}
+
+resource "aws_elasticache_subnet_group" "secure" {
+  name       = "${var.vpc_name}-secure"
+  subnet_ids = aws_subnet.secure.*.id
+}
