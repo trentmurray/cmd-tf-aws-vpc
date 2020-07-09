@@ -47,3 +47,18 @@ output "secure_tier_route_table_ids" {
   description = "List of route table ids for the secure tier"
   value       = aws_route_table.secure[*].id
 }
+
+output "db_subnet_group" {
+  description = "Name of db subnet group"
+  value       = aws_db_subnet_group.secure.id
+}
+
+output "redshift_subnet_group" {
+  description = "Name of redshift subnet group"
+  value       = aws_redshift_subnet_group.secure.id
+}
+
+output "elasticache_subnet_group" {
+  description = "Name of elasticache subnet group"
+  value       = aws_elasticache_subnet_group.secure.name
+}

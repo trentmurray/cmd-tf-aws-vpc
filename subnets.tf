@@ -50,20 +50,20 @@ resource "aws_subnet" "secure" {
 }
 
 resource "aws_db_subnet_group" "secure" {
-  name       = "${var.vpc_name}-secure"
+  name       = "${lower(var.vpc_name)}-secure"
   subnet_ids = aws_subnet.secure.*.id
 
   tags = var.tags
 }
 
 resource "aws_redshift_subnet_group" "secure" {
-  name       = "${var.vpc_name}-secure"
+  name       = "${lower(var.vpc_name)}-secure"
   subnet_ids = aws_subnet.secure.*.id
 
   tags = var.tags
 }
 
 resource "aws_elasticache_subnet_group" "secure" {
-  name       = "${var.vpc_name}-secure"
+  name       = "${lower(var.vpc_name)}-secure"
   subnet_ids = aws_subnet.secure.*.id
 }
