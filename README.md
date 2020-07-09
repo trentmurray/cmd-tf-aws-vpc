@@ -335,6 +335,14 @@ Default: `[]`
 
 The following outputs are exported:
 
+### db\_subnet\_group
+
+Description: Name of db subnet group
+
+### elasticache\_subnet\_group
+
+Description: Name of elasticache subnet group
+
 ### private\_tier\_route\_table\_ids
 
 Description: List of route table ids for the private tier
@@ -358,6 +366,10 @@ Description: Public tier CIDR range
 ### public\_tier\_subnet\_ids
 
 Description: List of subnet ids for the public tier
+
+### redshift\_subnet\_group
+
+Description: Name of redshift subnet group
 
 ### secure\_tier\_route\_table\_ids
 
