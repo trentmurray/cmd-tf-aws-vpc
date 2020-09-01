@@ -17,26 +17,59 @@ format:
   script:
     - make formatCheck
 
-plan:
+plan-aws2:
   stage: plan
   tags:
     - cmd
   script:
     - make plan
+  variables:
+    SUBFOLDER: tests/aws2
 
-apply:
+plan-aws3:
+  stage: plan
+  tags:
+    - cmd
+  script:
+    - make plan
+  variables:
+    SUBFOLDER: tests/aws3
+
+apply-aws2:
   stage: apply
   tags:
     - cmd
   script:
     - make apply
+  variables:
+    SUBFOLDER: tests/aws2
 
-destroy:
+apply-aws3:
+  stage: apply
+  tags:
+    - cmd
+  script:
+    - make apply
+  variables:
+    SUBFOLDER: tests/aws3
+
+destroy-aws2:
   stage: destroy
   tags:
     - cmd
   script:
     - make destroy
+  variables:
+    SUBFOLDER: tests/aws2
+
+destroy-aws3:
+  stage: destroy
+  tags:
+    - cmd
+  script:
+    - make destroy
+  variables:
+    SUBFOLDER: tests/aws3
 
 publish:
   stage: publish

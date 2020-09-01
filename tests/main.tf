@@ -1,13 +1,9 @@
-resource "random_string" "random" {
-  length  = 8
-  upper   = false
-  special = false
-}
+variable "vpc_name" {}
 
 module "vpc" {
   source = "../"
 
-  vpc_name       = "cmdlabtf${random_string.random.result}"
+  vpc_name       = var.vpc_name
   vpc_cidr_block = "10.150.0.0/16"
 
   availability_zones = ["ap-southeast-2a", "ap-southeast-2b", "ap-southeast-2c"]
