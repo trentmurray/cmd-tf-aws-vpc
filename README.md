@@ -43,13 +43,7 @@ object(
 
 The following requirements are needed by this module:
 
-- terraform (>= 0.12.6)
-
-- aws (>= 2.8.1)
-
-## Providers
-
-The following providers are used by this module:
+- terraform ( >= 0.12.26)
 
 - aws (>= 2.8.1)
 
