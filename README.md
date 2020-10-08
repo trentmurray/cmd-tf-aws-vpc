@@ -109,6 +109,22 @@ Type: `bool`
 
 Default: `false`
 
+### enable\_db\_subnet\_group
+
+Description: Create the secure DB VPC subnet group
+
+Type: `bool`
+
+Default: `true`
+
+### enable\_elasticache\_subnet\_group
+
+Description: Create the secure Elasticache VPC subnet group
+
+Type: `bool`
+
+Default: `true`
+
 ### enable\_internet\_gateway
 
 Description: Attach an internet gateway to the VPC
@@ -128,6 +144,14 @@ Default: `true`
 ### enable\_per\_az\_nat\_gateway
 
 Description: Create 1 nat gateway per AZ
+
+Type: `bool`
+
+Default: `true`
+
+### enable\_redshift\_subnet\_group
+
+Description: Create the secure Redshift VPC subnet group
 
 Type: `bool`
 
