@@ -50,6 +50,7 @@ resource "aws_subnet" "secure" {
 }
 
 resource "aws_db_subnet_group" "secure" {
+  count      = var.enable_db_subnet_group ? 1 : 0
   name       = "${lower(var.vpc_name)}-secure"
   subnet_ids = aws_subnet.secure.*.id
 
@@ -57,6 +58,7 @@ resource "aws_db_subnet_group" "secure" {
 }
 
 resource "aws_redshift_subnet_group" "secure" {
+  count      = var.enable_redshift_subnet_group ? 1 : 0
   name       = "${lower(var.vpc_name)}-secure"
   subnet_ids = aws_subnet.secure.*.id
 
@@ -64,6 +66,7 @@ resource "aws_redshift_subnet_group" "secure" {
 }
 
 resource "aws_elasticache_subnet_group" "secure" {
+  count      = var.enable_elasticache_subnet_group ? 1 : 0
   name       = "${lower(var.vpc_name)}-secure"
   subnet_ids = aws_subnet.secure.*.id
 }

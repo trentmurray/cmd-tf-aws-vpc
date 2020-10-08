@@ -91,6 +91,24 @@ variable "secure_tier_newbits" {
   default     = 2
 }
 
+variable "enable_db_subnet_group" {
+  type        = bool
+  description = "Create the secure DB VPC subnet group"
+  default     = true
+}
+
+variable "enable_redshift_subnet_group" {
+  type        = bool
+  description = "Create the secure Redshift VPC subnet group"
+  default     = true
+}
+
+variable "enable_elasticache_subnet_group" {
+  type        = bool
+  description = "Create the secure Elasticache VPC subnet group"
+  default     = true
+}
+
 variable "enable_internet_gateway" {
   type        = bool
   description = "Attach an internet gateway to the VPC"

@@ -50,15 +50,15 @@ output "secure_tier_route_table_ids" {
 
 output "db_subnet_group" {
   description = "Name of db subnet group"
-  value       = aws_db_subnet_group.secure.id
+  value       = length(aws_db_subnet_group.secure) > 0 ? aws_db_subnet_group.secure[0].id : ""
 }
 
 output "redshift_subnet_group" {
   description = "Name of redshift subnet group"
-  value       = aws_redshift_subnet_group.secure.id
+  value       = length(aws_redshift_subnet_group.secure) > 0 ? aws_redshift_subnet_group.secure[0].id : ""
 }
 
 output "elasticache_subnet_group" {
   description = "Name of elasticache subnet group"
-  value       = aws_elasticache_subnet_group.secure.name
+  value       = length(aws_elasticache_subnet_group.secure) > 0 ? aws_elasticache_subnet_group.secure[0].id : ""
 }
