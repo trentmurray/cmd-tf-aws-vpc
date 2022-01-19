@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - 2022-01-19
+- Changed syntax in vpc-endpoints.tf (route_table_ids) to remove deprication warnings.
+
 ## [0.11.0] - 2020-10-08
 - Added options `enable_db_subnet_group`, `enable_redshift_subnet_group`, `enable_elasticache_subnet_group` allowing you to disable created subnet groups. Useful when IAM/SCP permissions dont allow those services. 
 
