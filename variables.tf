@@ -194,19 +194,49 @@ variable "nacl_block_public_to_secure" {
 }
 
 variable "nacl_public_custom" {
-  type        = map
+  type        = map(object({
+    rule_number = number
+    egress      = bool
+    protocol    = string
+    rule_action = string
+    cidr_block  = string
+    from_port   = number
+    to_port     = number    
+    
+  }))
+  
   description = "List of custom nacls to apply to the public tier"
   default     = {}
 }
 
 variable "nacl_private_custom" {
-  type        = map
+  type        = map(object({
+    rule_number = number
+    egress      = bool
+    protocol    = string
+    rule_action = string
+    cidr_block  = string
+    from_port   = number
+    to_port     = number    
+    
+  }))
+
   description = "List of custom nacls to apply to the private tier"
   default     = {}
 }
 
 variable "nacl_secure_custom" {
-  type        = map
+  type        = map(object({
+    rule_number = number
+    egress      = bool
+    protocol    = string
+    rule_action = string
+    cidr_block  = string
+    from_port   = number
+    to_port     = number    
+    
+  }))
+
   description = "List of custom nacls to apply to the secure tier"
   default     = {}
 }
